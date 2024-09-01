@@ -5,7 +5,7 @@ from apps.users.serializers import UserListSerializer
 from rest_framework.test import APIClient
 from django.urls import reverse
 from apps.projects.models import Project
-from apps.users.choices.positions import Positions  # Импорт перечисления для позиций
+from apps.users.choices.positions import Positions
 
 
 class UserTests(TestCase):
@@ -27,7 +27,7 @@ class UserTests(TestCase):
 
         # Создание проекта и добавление пользователя в проект
         project = Project.objects.create(name=project_name)
-        self.user1.project = project  # Если связь через ForeignKey, используйте это поле
+        self.user1.project = project
         self.user1.save()
 
         response = client.get(reverse('users-list'), {'project_name': project_name})
@@ -52,11 +52,11 @@ class UserTests(TestCase):
         user_data = {
             'username': 'newuser',
             'email': 'newuser@example.com',
-            'password': 'ComplexPassword#123',  # Используем более сложный пароль
+            'password': 'ComplexPassword#123',
             're_password': 'ComplexPassword#123',
             'first_name': 'First',
             'last_name': 'Last',
-            'position': Positions.CEO.value  # Преобразуем значение перечисления в строку
+            'position': Positions.CEO.value
         }
         response = client.post(reverse('register-user'), user_data, format='json')
         print(response.data)  # Вывод данных для диагностики
