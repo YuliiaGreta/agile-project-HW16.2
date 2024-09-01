@@ -5,7 +5,6 @@ from rest_framework.generics import ListAPIView, CreateAPIView
 from apps.users.models import User
 from apps.users.serializers.user_serializers import UserListSerializer, RegisterUserSerializer
 
-
 class UserListGenericView(ListAPIView):
     serializer_class = UserListSerializer
 
@@ -20,7 +19,7 @@ class UserListGenericView(ListAPIView):
     def list(self, request: Request, *args, **kwargs) -> Response:
         projects = self.get_queryset()
 
-        if not projects.exists():
+        if not projects:
             return Response(
                 data=[],
                 status=status.HTTP_204_NO_CONTENT

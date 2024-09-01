@@ -4,11 +4,11 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 import re
 
-
 class UserListSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
+            'username',  # Добавлено поле
             'first_name',
             'last_name',
             'position',
@@ -16,7 +16,6 @@ class UserListSerializer(serializers.ModelSerializer):
             'phone',
             'last_login',
         )
-
 
 class RegisterUserSerializer(serializers.ModelSerializer):
     re_password = serializers.CharField(
@@ -79,4 +78,3 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
-
