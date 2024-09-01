@@ -2,7 +2,7 @@ from django.test import TestCase
 import pytest
 from apps.users.models import User
 from unittest.mock import patch
-from apps.users.serializers import UserSerializer
+from apps.users.serializers import UserListSerializer  # Заменил UserSerializer на UserListSerializer
 from rest_framework.test import APIClient
 from django.urls import reverse
 
@@ -32,9 +32,9 @@ def test_get_empty_users_list():
         assert response.data == []
 
 def test_user_serializer(user_fixture):
-    serialized_data = UserSerializer(user_fixture, many=True).data
+    serialized_data = UserListSerializer(user_fixture, many=True).data  # Используем UserListSerializer
     for i, user in enumerate(user_fixture):
-        assert serialized_data[i]['username'] == user.username
+        assert serialized_data[i]['first_name'] == user.first_name
         assert serialized_data[i]['email'] == user.email
 
 def test_create_user_with_valid_data():
